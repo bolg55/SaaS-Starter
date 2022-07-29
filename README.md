@@ -142,3 +142,6 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # **🙏 Acknowledgement & Inspiration:**
 
 This project would not have been possible without the inspiration from [Nextacular](https://nextacular.co/) or [@gmpetrov](https://github.com/gmpetrov). [Andrew Jones article](https://dev.to/ajones_codes/how-to-add-user-accounts-and-paid-subscriptions-to-your-nextjs-website-585e) was also incredibly helpful and a lot of the final repo has code directly influenced by this post. Thank you [@aej11a](https://github.com/aej11a).
+
+# **License**
+All code provided in this repository is provided under the [MIT License](https://github.com/bolg55/SaaS-Starter/blob/main/LICENSE)
