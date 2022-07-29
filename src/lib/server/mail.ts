@@ -29,9 +29,9 @@ export const sendVerificationRequest = ({
   })
   const emailTemplate = Handlebars.compile(emailFile)
   transporter.sendMail({
-    from: `"Action Backers" ${process.env.EMAIL_FROM}`,
+    from: `<NAME> ${process.env.EMAIL_FROM}`,
     to: identifier,
-    subject: 'Your sign-in link for Action Backers',
+    subject: 'Your sign-in link for <NAME>',
     html: emailTemplate({
       base_url: process.env.NEXTAUTH_URL,
       signin_url: url,
