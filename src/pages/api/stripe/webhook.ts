@@ -44,12 +44,46 @@ export default async (
           // Update that customer so their status is now active
           data: {
             isActive: true,
-            subPlan: subscription.items.data[0]?.price.id,
+            subPlan: subscription.items.data[0]?.price.product as string,
+            interval: subscription.items.data[0]?.plan.interval,
+            subStatus: subscription.status,
+            cancelAtPeriodEnd: subscription.cancel_at_period_end,
+          },
+        })
+        break
+      }
+      case 'customer.subscription.updated': {
+        const subscription = event.data.object as Stripe.Subscription
+        await prisma.user.update({
+          // Find the customer in our database with the Stripe customer ID linked to this purchase
+          where: {
+            stripeCustomerId: subscription.customer as string,
+          },
+          // Update that customer so their status is now active
+          data: {
+            isActive: true,
+            subPlan: subscription.items.data[0]?.price.product as string,
+            interval: subscription.items.data[0]?.plan.interval,
+            subStatus: subscription.status,
+            cancelAtPeriodEnd: subscription.cancel_at_period_end,
           },
         })
         break
       }
       // ... handle other event types
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object as Stripe.Subscription
+        await prisma.user.update({
+          where: { stripeCustomerId: subscription.customer as string },
+          data: {
+            isActive: false,
+            subPlan: null,
+            interval: null,
+            subStatus: null,
+            cancelAtPeriodEnd: null,
+          },
+        })
+      }
       default:
         console.log(`Unhandled event type ${event.type}`)
     }

@@ -1,4 +1,5 @@
 import { DefaultUser, Session } from 'next-auth'
+import { NextApiRequest } from 'next'
 
 declare module 'next-auth' {
   interface Session {
@@ -6,7 +7,12 @@ declare module 'next-auth' {
       id: string
       stripeCustomerId?: string
       isActive?: boolean
-      subPlan?: string
+      subTier?: string
+      subStatus?: string
     }
   }
+}
+
+export interface AppNextApiRequest extends NextApiRequest {
+  session: Session
 }

@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import EmailProvider from 'next-auth/providers/email'
 import { prisma, stripe } from '@/lib/server'
+import { getStripeSubTier } from '@/lib/server/stripe'
 import { emailConfig, sendVerificationRequest } from '@/lib/server/mail'
 
 // Prisma Adapter for NextAuth
@@ -23,10 +24,16 @@ export default NextAuth({
   ],
   callbacks: {
     session: async ({ session, user }) => {
+      const stripeSubTier = await getStripeSubTier(
+        user.isActive as boolean,
+        user.subPlan as string
+      )
       session!.user!.id = user.id
       session!.user!.stripeCustomerId = user.stripeCustomerId as string
       session!.user!.isActive = user.isActive as boolean
-      session!.user!.subPlan = user.subPlan as string
+      session!.user!.subTier = stripeSubTier?.subType
+      session!.user!.subStatus = user.subStatus as string
+
       return session
     },
   },

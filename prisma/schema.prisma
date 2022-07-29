@@ -39,16 +39,19 @@ model Session {
 }
 
 model User {
-  id               String    @id @default(cuid())
-  name             String?
-  email            String?   @unique
-  emailVerified    DateTime?
-  image            String?
-  stripeCustomerId String?   @unique
-  isActive         Boolean   @default(false)
-  subPlan          String?
-  accounts         Account[]
-  sessions         Session[]
+  id                String              @id @default(cuid())
+  name              String?
+  email             String?             @unique
+  emailVerified     DateTime?
+  image             String?
+  stripeCustomerId  String?             @unique
+  isActive          Boolean             @default(false)
+  subPlan           String?
+  interval          String?
+  accounts          Account[]
+  sessions          Session[]
+  subStatus         SubscriptionStatus?
+  cancelAtPeriodEnd Boolean?
 }
 
 model VerificationToken {
@@ -57,4 +60,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum SubscriptionStatus {
+  trialing
+  active
+  canceled
+  incomplete
+  incomplete_expired
+  past_due
+  unpaid
 }

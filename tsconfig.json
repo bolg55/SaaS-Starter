@@ -22,7 +22,10 @@
       "@/lib/*": ["src/lib/*"],
       "@/layouts/*": ["src/layouts/*"],
       "@/styles/*": ["src/styles/*"],
-      "@/types/*": ["src/types/*"]
+      "@/types/*": ["src/types/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/middlewares/*": ["src/middlewares/*"],
+      "@/sections/*": ["src/sections/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,13 +1,10 @@
-/* eslint-disable import/no-anonymous-default-export */
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 import { Stripe } from 'stripe'
-import { stripe } from '@/lib/server'
+import { stripe, createAuthApiHandler } from '@/lib/server'
 
-export default async (
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> => {
+const handler = createAuthApiHandler()
+
+handler.post(async (req, res) => {
   const session = await getSession({ req })
   const { price } = req.body
 
@@ -46,12 +43,7 @@ export default async (
   const checkoutSession: Stripe.Checkout.Session =
     await stripe.checkout.sessions.create(params)
 
-  if (!checkoutSession.url) {
-    return res.status(500).json({
-      code: 'stripe-error',
-      error: 'Could not create checkout session',
-    })
-  }
+  return res.status(200).json({ sessionId: checkoutSession.id })
+})
 
-  return res.status(200).json({ redirectUrl: checkoutSession.url })
-}
+export default handler
