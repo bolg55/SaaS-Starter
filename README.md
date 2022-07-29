@@ -9,7 +9,7 @@
 # **Tech Stack:**
 
 - [TypeScript](https://typescriptlang.org/)
-- [Next.js]("https://nextjs.org)
+- [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Prisma](https://prisma.io/)
